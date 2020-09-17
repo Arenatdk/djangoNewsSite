@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}
+    Добавление :: {{ block.super }}
+{% endblock %}
+{% block sidebar %}
+
+    {% include 'inc/_sidebar.html' %}
+
+{% endblock %}
+
+{% block content %}
+    <h1>Добавление </h1>
+    <form action="{% url 'add_news' %}" method="post">{% csrf_token %}
+
+        <span class="help-inline">
+        {{ form.non_field_errors }}
+    </span>
+        {#  {{ form.as_p }} #}
+
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                <span class="help-inline">
+                {{ form.non_field_errors }}
+                {{ field.errors }}
+                            {% for error in  field.errors %}{{ error }}{% endfor %}
+                        </span>
+            </div>
+        {% endfor %}
+
+        <div class="form-actions">
+            <button type="submit" value="Create"  class="btn btn-block btn-primary" >Добавить</button>
+        </div>
+    </form>
+{% endblock %}

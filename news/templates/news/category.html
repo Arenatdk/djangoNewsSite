@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{ title }} :: {{ block.super }}
+{% endblock %}
+{% block sidebar %}
+    {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+
+    {% for item in nws %}
+        <div class="card mb-3">
+            <div class="card-header">
+                Категория: <a href="{% url 'category' item.category.pk %}" class="href">{{  item.category.title}}</a>
+            </div>
+            <div class="card-body">
+                <div class="media">
+                    {% if item.photo %}
+                        <img width="235" class="mr-3" src="{{ item.photo.url }}" alt="">
+                    {% endif %}
+
+                    <div class="media-body">
+                        <h5 class="card-title">{{ item.title }}</h5>
+                        <p class="card-text">{{ item.content|truncatechars:34 }}</p>
+                        <a href="{{ item.get_absolute_url }}" class="btn btn-primary">Read more</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-footer text-muted">
+                {{ item.created_at|timesince}}
+            </div>
+        </div>
+
+
+    {% endfor %}
+
+{% endblock %}
+
+
+
+
+
